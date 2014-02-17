@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title></title>
+  <style type="text/css">
+  table, th, td {border: 1px solid black}
+  .fail {color: red}
+  .pass {color: green}
+  .warn {color: #DAB806}
+  </style>
+</head>
+
+<body>
+<h1></h1>
+<table>
+<thead>
+<tr>
+<th>Remote</th>
+<th>Last run</th>
+{% for header in table.headers %}
+  <th>{{ header }}</th>
+{% endfor %}
+</tr>
+</thead>
+<body>
+{% for row in table.rows %}
+  <tr>
+    <th>{{row.remote.name}}</th>
+    <th>{{row.remote.latest_run.timestamp|timesince}}</th>
+    {% for col in row.columns %}
+    <td><span class="{{col.status}}" title="{{col.detailed_result}}">{{ col.brief_result }}</span></td>
+    {% endfor %}
+  </tr>
+{% endfor %}
+</body>
+</table>
+</body>
+</html>
