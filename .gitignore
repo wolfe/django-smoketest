@@ -3,3 +3,8 @@
 *.pyc
 local_settings.py
 *.sqlite3
+.*
+dist
+*.egg-info
+!.gitigore
+
