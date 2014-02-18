@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponse
 from django.utils.module_loading import import_by_path
-from django.utils import simplejson as json
+import json
 from smoketest.smoketests import CROSS
 from smoketest.constants import Status
 
@@ -15,7 +15,10 @@ def view_smoketests(request):
         else:
             test_path, args = smoketest[0], smoketest[1:]
         try:
-            tester = import_by_path(test_path)(*args)
+            tester = import_by_path(test_path)
+            # We assume if tester(*args) fails, that at least
+            # tester is left as the class and we can report tester.name
+            tester = tester(*args)
         except Exception, e:  # On any exception, test has failed
             return {
                 "name": tester.name,
